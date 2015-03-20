@@ -1,0 +1,12 @@
+body{
+  /*background-color: #d6ffd6;*/
+}
+pre.test {
+	padding: 2px;
+	border: 1px solid #ccc;
+	background-color: #e1e1e1;
+	margin: 1px;
+}
+pre.test.error{ color: #f00; }
+pre.test.ok{ color: #0f0; }
+pre.test.diag{ color: #660; }

@@ -1,0 +1,65 @@
+<html >
+<head>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<script type="text/javascript"  src="../lib/Session.js"> </script>
+<script type="text/javascript">
+// <![CDATA[
+
+// initialize application defaults
+var counter = SESSION.get("counter") || {
+    visits: 0,
+    time: []
+};
+
+// onload
+window.onload = function() {
+
+    // update previous visits
+    var d = new Date();
+    counter.visits++;
+    counter.time.push(Pad(d.getHours()) + ":" + Pad(d.getMinutes()) + ":" + Pad(d.getSeconds()));
+    if (counter.time.length > 10)
+        counter.time = counter.time.slice(1);
+
+    // update page
+    document.getElementById("visits").firstChild.nodeValue = counter.visits + " time" + (counter.visits == 1 ? "" : "s");
+    var t = "";
+    for (var i = counter.time.length-1; i >= 0; i--)
+        t += counter.time[i] + "\n";
+    document.getElementById("times").firstChild.nodeValue = t;
+
+    // store value in SESSION
+    SESSION.set("counter", counter);
+
+    // add leading zeros
+    function Pad(n) {
+        n = "00" + n;
+        return n.substr(n.length-2);
+    }
+};
+
+// ]]>
+</script>
+</head>
+<body>
+
+
+
+<p>
+    <strong>You have visited this page: </strong>
+    <span id="visits">0 times</span>
+</p>
+<p><strong>The previous 10 visit times:</strong></p>
+<pre id="times">--:--:--</pre>
+
+<p>Close your browser or click <a href="#" onclick="SESSION.clear();">
+<strong>reset counter</strong></a>
+to restart the SESSION.</p>
+
+<p><a href="#" onclick="alert(SESSION.dump());">(view SESSION dump)</a></p>
+
+
+
+
+</body>
+</html>
